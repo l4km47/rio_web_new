@@ -93,10 +93,7 @@ router.post("/login", async (req, res) => {
           if (isMatch) {
             // Password is correct, generate a token and send it to the client
             console.log("user found");
-            const token = jwt.sign(
-              { id: result[0].id },
-              process.env.ACCESS_TOKEN_SECRET
-            );
+            const token = jwt.sign({ id: result[0].id }, "plynynnhttpponnya");
             res.json({
               token: token,
               email: result[0].email,
