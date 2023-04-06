@@ -5,6 +5,16 @@ const dotenv = require("dotenv");
 const listEndpoints = require("express-list-endpoints");
 const cors = require("cors");
 
+const https = require("https");
+const fs = require("fs");
+
+const options = {
+  key: fs.readFileSync("/etc/letsencrypt/live/gogota.duckdns.org/privkey.pem"),
+  cert: fs.readFileSync(
+    "/etc/letsencrypt/live/gogota.duckdns.org/fullchain.pem"
+  ),
+};
+
 const challengesRouter = require("./routers/challenges");
 const eventsRouter = require("./routers/events");
 const uploadRouter = require("./routers/upload");
@@ -36,7 +46,8 @@ app.get("/test", (req, res) => {
 });
 
 console.log(listEndpoints(app));
+const server = https.createServer(options, app);
 
-app.listen(3000, () => {
-  console.log("Server started port is 3000");
+server.listen(3000, () => {
+  console.log("Server listening on port 3000");
 });
