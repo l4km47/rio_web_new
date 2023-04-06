@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require("uuid"); // use uuid to generate a unique filenam
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "/www/wwwroot/riogamers.lk/public/"); // specify the upload directory
+    cb(null, "/www/wwwroot/riogamers.lk/public/images/"); // specify the upload directory
   },
   filename: (req, file, cb) => {
     const extension = path.extname(file.originalname); // get the file extension
