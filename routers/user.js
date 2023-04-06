@@ -94,6 +94,7 @@ router.post("/login", async (req, res) => {
             // Password is correct, generate a token and send it to the client
             console.log("user found");
             const token = jwt.sign({ id: result[0].id }, "plynynnhttpponnya");
+            console.log(token);
             res.json({
               token: token,
               email: result[0].email,
