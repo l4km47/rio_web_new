@@ -92,7 +92,7 @@ router.post("/login", async (req, res) => {
           const isMatch = await bcrypt.compare(password, result[0].password);
           if (isMatch) {
             // Password is correct, generate a token and send it to the client
-            console.log("user found");
+            console.log("user found", result);
             const token = jwt.sign({ id: result[0].id }, "plynynnhttpponnya");
             console.log(token);
             res.json({
