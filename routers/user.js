@@ -80,31 +80,35 @@ router.post("/login", async (req, res) => {
     const checkValues = [email];
 
     executeQuery(checkQuery, checkValues, async (error, result) => {
-      if (error) {
-        return next(error);
-      }
-      if (result.length === 0) {
-        // Email not found in database
-        res.status(401).json({ error: "Invalid email or password" });
-      } else {
-        // Email found in database, check if password is correct
-        const isMatch = await bcrypt.compare(password, result[0].password);
-        if (isMatch) {
-          // Password is correct, generate a token and send it to the client
-          const token = jwt.sign(
-            { id: result[0].id },
-            process.env.ACCESS_TOKEN_SECRET
-          );
-          res.json({
-            token: token,
-            email: result[0].email,
-            username: result[0].username,
-            isAdmin: result[0].isAdmin,
-          });
-        } else {
-          // Password is incorrect
-          res.status(401).json({ error: "Invalid email or password" });
+      try {
+        if (error) {
+          return next(error);
         }
+        if (result.length === 0) {
+          // Email not found in database
+          res.status(401).json({ error: "Invalid email or password" });
+        } else {
+          // Email found in database, check if password is correct
+          const isMatch = await bcrypt.compare(password, result[0].password);
+          if (isMatch) {
+            // Password is correct, generate a token and send it to the client
+            const token = jwt.sign(
+              { id: result[0].id },
+              process.env.ACCESS_TOKEN_SECRET
+            );
+            res.json({
+              token: token,
+              email: result[0].email,
+              username: result[0].username,
+              isAdmin: result[0].isAdmin,
+            });
+          } else {
+            // Password is incorrect
+            res.status(401).json({ error: "Invalid email or password" });
+          }
+        }
+      } catch (error) {
+        console.log(error);
       }
     });
   } catch (err) {
