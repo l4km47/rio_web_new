@@ -8,10 +8,12 @@ const cors = require("cors");
 const https = require("https");
 const fs = require("fs");
 
+/// /www/server/panel/vhost/cert/riogamers.lk/fullchain.pem;
+/// /www/server/panel/vhost/cert/riogamers.lk/privkey.pem;
 const options = {
-  key: fs.readFileSync("/etc/letsencrypt/live/gogota.duckdns.org/privkey.pem"),
+  key: fs.readFileSync("/www/server/panel/vhost/cert/riogamers.lk/privkey.pem"),
   cert: fs.readFileSync(
-    "/etc/letsencrypt/live/gogota.duckdns.org/fullchain.pem"
+    "/www/server/panel/vhost/cert/riogamers.lk/fullchain.pem"
   ),
 };
 
